@@ -1,0 +1,86 @@
+
+# reboot and shutdown
+alias rb="sudo reboot"
+alias shd="sudo shutdown -h now"
+
+# neovim shortcut
+
+v(){
+	sudo nvim $1
+}
+export v
+
+# clear the screen
+alias c="clear"
+
+# back one directory
+
+alias b="cd .."
+
+# quick password generator
+
+alias qpass="openssl rand -base64 12"
+
+# quick ping
+
+alias pingi="ping -c 3 archlinux.org"
+
+# quick external ip address
+
+alias eip='curl ipinfo.io/ip'
+
+# pacman alias
+
+alias pm="sudo pacman -S"
+
+# enable and start a systemd service
+alias enser="sudo systemctl enable"
+alias setser="sudo systemctls start"
+#***** now a function
+servd(){
+	sudo systemctl enable "$1"
+	sudo systemctl start "$1"
+}
+export servd
+alias servs="sudo systemctl status"
+
+# ssh command simplified
+sshi(){
+	HOSTIPA="192.168.0"
+	ssh "$HOSTIPA"."$1"
+	return
+}
+export sshi	
+
+# sshpi - to connect to my raspberryPi
+#alias sshpi="ssh twfl@192.168.0.102 -i /home/twfl/.ssh/raspiServ \n naDbog19x"
+
+sshpi (){
+	ssh twfl@192.168.0.103 -i /home/twfl/.ssh/raspiServ
+}
+export sshpi
+# regular update function
+update () {
+	echo -e "\n \n Updating..."
+	sudo pacman -Syu --noconfirm
+	echo -e "Updated successfully"
+	return
+}
+
+export update
+
+# forced update function
+updatef () {
+	echo -e "\n Starting forced system update..."
+	echo -e "\n Optimizing repositories (reflector)..."
+	sudo reflector --verbose --country 'Poland' --age 24 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+	echo -e "\n Updating..."
+	sudo pacman -Syyuu --noconfirm
+	echo -e "\n Removing orphans..."
+	sudo pacman -Rns $(pacman -Qtdq)
+#	sudo pacman -Qtdq | sudo  pacman -Rns - #this didn't work well 
+	echo -e "\n System updated successfully"
+	return
+}
+export updatef
+

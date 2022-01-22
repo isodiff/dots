@@ -1,0 +1,2 @@
+def oki():
+    print("oko")

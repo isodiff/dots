@@ -1,0 +1,6 @@
+/** Basic config file **/
+
+configuration {
+  show-icons:         false;
+}
+@theme "/usr/share/rofi/themes/chromium.rasi"
